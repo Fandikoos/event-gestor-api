@@ -1,7 +1,7 @@
-package com.svalero.event_gestor.Domain;
+package com.svalero.event_gestor.Dto;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,25 +11,14 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "event")
-public class Event {
+public class EventOutDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column
     private String name;
-    @Column
     private LocalDate date;
-    @Column
     private String place;
-    @Column
     private String description;
-    @Column
     private String type;  //Carrera, Torneo, Partido, Futbol...
-    @Column
     private String status;  //Cancelado, activo, Finalizado...
-    @Column
     private int participants;
 }

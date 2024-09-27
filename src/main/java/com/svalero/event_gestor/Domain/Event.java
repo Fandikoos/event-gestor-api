@@ -32,4 +32,8 @@ public class Event {
     private String status;  //Cancelado, activo, Finalizado...
     @Column
     private int participants;
+    @Column
+    private String price;
+    @Lob
+    private byte[] eventImage;
 }

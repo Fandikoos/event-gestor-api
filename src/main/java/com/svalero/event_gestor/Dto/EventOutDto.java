@@ -21,4 +21,6 @@ public class EventOutDto {
     private String type;  //Carrera, Torneo, Partido, Futbol...
     private String status;  //Cancelado, activo, Finalizado...
     private int participants;
+    private String price;
+    private String eventImage;
 }

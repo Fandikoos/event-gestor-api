@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -26,6 +27,8 @@ public class EventInDto {
     private String status;
     @Min(value = 2, message = "Minimium participants must be 2")
     private int participants;
+    private String price;
+    private MultipartFile eventImage;
 
 
 }

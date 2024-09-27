@@ -5,12 +5,14 @@ import com.svalero.event_gestor.Domain.Event;
 import com.svalero.event_gestor.Dto.EventInDto;
 import com.svalero.event_gestor.Dto.EventOutDto;
 import com.svalero.event_gestor.Repository.EventRepository;
+import com.svalero.event_gestor.Utils.EventMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -21,8 +23,13 @@ public class EventService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<Event> findAll(){
-        return eventRepository.findAll();
+    // Método para obtener todos los eventos y convertirlos a EventOutDto
+    public List<EventOutDto> getAllEvents() {
+        List<Event> events = eventRepository.findAll();
+        //Convertimos esos eventos en un stream para poder iterar sobre ellos
+        return events.stream()
+                .map(EventMapper::mapToEventOutDto)  // Convertimos cada evento a EventOutDto
+                .collect(Collectors.toList());      //Convertimos el stream (que ya tiene los outdtos) en una lista de objetos nomral
     }
 
     public EventOutDto addEvent(EventInDto eventInDto) throws IOException {
@@ -32,6 +39,12 @@ public class EventService {
         // se encarga de copiar estos valores
         // Tenemos el id automatico dentro del author por lo que lo coge de ahí que es incrementable, lo mismo pasaría con fechas...
         modelMapper.map(eventInDto, event);
+
+        //Verificamos que existe la imagen
+        if(eventInDto.getEventImage() != null){
+            //La convertimos a un array de bytes
+            event.setEventImage(eventInDto.getEventImage().getBytes());
+        }
 
         // Creamos un newAuthor que contiene los datos del InDto y lo guardamos en el repository
         // Guaradmos este objeto en la bbdd con el .save y el resultado se almacena en newAuthor

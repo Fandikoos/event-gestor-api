@@ -7,6 +7,7 @@ import com.svalero.event_gestor.Service.EventService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,12 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping
-    public ResponseEntity<List<Event>> getAll() {
-        return new ResponseEntity<>(eventService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<EventOutDto>> getAll() {
+        return new ResponseEntity<>(eventService.getAllEvents(), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<EventOutDto> addEvent(@Valid @RequestBody EventInDto event) throws IOException {
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<EventOutDto> addEvent(@Valid @ModelAttribute EventInDto event) throws IOException {
         EventOutDto newEvent = eventService.addEvent(event);
         return new ResponseEntity<>(newEvent, HttpStatus.CREATED);
     }

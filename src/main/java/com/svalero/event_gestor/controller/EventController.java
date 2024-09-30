@@ -32,4 +32,16 @@ public class EventController {
         EventOutDto newEvent = eventService.addEvent(event);
         return new ResponseEntity<>(newEvent, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<Void> removeEvent(@PathVariable long eventId){
+        eventService.removeEvent(eventId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping(value = "/{eventId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<EventOutDto> modifyEvent(@PathVariable long eventId, @Valid @ModelAttribute EventInDto event) throws IOException{
+        EventOutDto updateEvent = eventService.modifyEvent(event, eventId);
+        return new ResponseEntity<>(updateEvent, HttpStatus.OK);
+    }
 }

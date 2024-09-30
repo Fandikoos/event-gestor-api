@@ -35,9 +35,9 @@ public class EventService {
     public EventOutDto addEvent(EventInDto eventInDto) throws IOException {
         Event event = new Event();
 
-        // Mapeamos los campos de AuthorInDto al objeto author, se los pasamos digamos, model mapper
+        // Mapeamos los campos de EventInDto al objeto Event, se los pasamos digamos, model mapper
         // se encarga de copiar estos valores
-        // Tenemos el id automatico dentro del author por lo que lo coge de ahí que es incrementable, lo mismo pasaría con fechas...
+        // Tenemos el id automatico dentro del event por lo que lo coge de ahí que es incrementable, lo mismo pasaría con fechas...
         modelMapper.map(eventInDto, event);
 
         //Verificamos que existe la imagen
@@ -46,16 +46,48 @@ public class EventService {
             event.setEventImage(eventInDto.getEventImage().getBytes());
         }
 
-        // Creamos un newAuthor que contiene los datos del InDto y lo guardamos en el repository
-        // Guaradmos este objeto en la bbdd con el .save y el resultado se almacena en newAuthor
+        // Creamos un newEvent que contiene los datos del InDto y lo guardamos en el repository
+        // Guaradmos este objeto en la bbdd con el .save y el resultado se almacena en newEvent
         Event newEvent = eventRepository.save(event);
 
         // Creamos un OutDto para devolver una respuesta, en el Postman por ejemplo
         EventOutDto eventOutDto = new EventOutDto();
-        // Mapemaos los atributos del newAuthor en nuestro AuthorDto para la respuesta
+        // Mapemaos los atributos del newEvent en nuestro EventOutDto para la respuesta
         modelMapper.map(newEvent, eventOutDto);
 
         //Lo devolvemos para mostrarlo en Postman
         return eventOutDto;
+    }
+
+    public void removeEvent(long eventId){
+        Event event = eventRepository.findById(eventId).orElseThrow();
+        eventRepository.delete(event);
+    }
+
+    public EventOutDto modifyEvent(EventInDto eventInDto, long eventId) throws IOException {
+        // Encuentramos el evento existente en la base de datos usando el ID proporcionado
+        Event existingEvent = eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Event not found"));
+
+        // Actualizamos los campos del evento existentes cn los valores proporcionados en el body del postman
+        existingEvent.setName(eventInDto.getName());
+        existingEvent.setDate(eventInDto.getDate());
+        existingEvent.setPlace(eventInDto.getPlace());
+        existingEvent.setDescription(eventInDto.getDescription());
+        existingEvent.setParticipants(eventInDto.getParticipants());
+        existingEvent.setPrice(eventInDto.getPrice());
+        existingEvent.setStatus(eventInDto.getStatus());
+        existingEvent.setType(eventInDto.getType());
+        existingEvent.setEventImage(existingEvent.getEventImage());
+
+        // Verificamos que hay una imagen nueva para actualizar la anterior
+        if (eventInDto.getEventImage() != null && !eventInDto.getEventImage().isEmpty()){
+            existingEvent.setEventImage(eventInDto.getEventImage().getBytes());
+        }
+
+        // Guardamos el evento
+        Event updateEvent = eventRepository.save(existingEvent);
+
+        // Mapea el evento actualizado al DTO de salida y lo devuelve en Postman
+        return modelMapper.map(updateEvent, EventOutDto.class);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,10 @@ public class EventService {
         return events.stream()
                 .map(EventMapper::mapToEventOutDto)  // Convertimos cada evento a EventOutDto
                 .collect(Collectors.toList());      //Convertimos el stream (que ya tiene los outdtos) en una lista de objetos nomral
+    }
+
+    public Event findEventById(long eventId){
+        return eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Evento con el id: " + eventId + " no encontrado."));
     }
 
     public EventOutDto addEvent(EventInDto eventInDto) throws IOException {

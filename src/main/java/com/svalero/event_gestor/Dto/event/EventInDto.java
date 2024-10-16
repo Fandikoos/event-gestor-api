@@ -1,4 +1,4 @@
-package com.svalero.event_gestor.Dto;
+package com.svalero.event_gestor.Dto.event;
 
 
 import jakarta.validation.constraints.Min;
@@ -22,9 +22,7 @@ public class EventInDto {
     @NotNull(message = "It is mandatory to establish the place of the event")
     private String place;
     private String description;
-    private String type;
-    @NotNull(message = "It is mandatory to establish the status of the event")
-    private String status;
+    private String category;
     @Min(value = 2, message = "Minimium participants must be 2")
     private int participants;
     private String price;

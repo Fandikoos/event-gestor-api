@@ -1,7 +1,7 @@
 package com.svalero.event_gestor.Utils;
 
 import com.svalero.event_gestor.Domain.Event;
-import com.svalero.event_gestor.Dto.EventOutDto;
+import com.svalero.event_gestor.Dto.event.EventOutDto;
 
 import java.util.Base64;
 
@@ -15,8 +15,7 @@ public class EventMapper {
         eventOutDto.setDate(event.getDate());
         eventOutDto.setPlace(event.getPlace());
         eventOutDto.setDescription(event.getDescription());
-        eventOutDto.setType(event.getType());
-        eventOutDto.setStatus(event.getStatus());
+        eventOutDto.setCategory(event.getCategory());
         eventOutDto.setParticipants(event.getParticipants());
         eventOutDto.setPrice(event.getPrice());
 

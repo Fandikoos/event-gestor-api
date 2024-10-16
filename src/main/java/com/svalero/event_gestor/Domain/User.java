@@ -1,20 +1,18 @@
 package com.svalero.event_gestor.Domain;
 
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "event")
-public class Event {
+@Entity(name = "user")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,27 +20,23 @@ public class Event {
 
     @Column
     private String name;
+
+    @Column(unique = true)
+    private String email;
+
     @Column
-    private LocalDate date;
+    private String password;
+
     @Column
-    private String place;
-    @Column
-    private String description;
-    @Column
-    private String category;  //Carrera, Torneo, Partido, Futbol...
-    @Column
-    private int participants;
-    @Column
-    private String price;
-    @Lob
-    private byte[] eventImage;
+    private String phone;
+
     // Relación One-to-Many con Registro
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Registration> registrations;
 
     // Relación One-to-Many con Rating
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Rating> ratings;
 }

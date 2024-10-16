@@ -2,8 +2,8 @@ package com.svalero.event_gestor.Service;
 
 
 import com.svalero.event_gestor.Domain.Event;
-import com.svalero.event_gestor.Dto.EventInDto;
-import com.svalero.event_gestor.Dto.EventOutDto;
+import com.svalero.event_gestor.Dto.event.EventInDto;
+import com.svalero.event_gestor.Dto.event.EventOutDto;
 import com.svalero.event_gestor.Repository.EventRepository;
 import com.svalero.event_gestor.Utils.EventMapper;
 import org.modelmapper.ModelMapper;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,8 +79,7 @@ public class EventService {
         existingEvent.setDescription(eventInDto.getDescription());
         existingEvent.setParticipants(eventInDto.getParticipants());
         existingEvent.setPrice(eventInDto.getPrice());
-        existingEvent.setStatus(eventInDto.getStatus());
-        existingEvent.setType(eventInDto.getType());
+        existingEvent.setCategory(eventInDto.getCategory());
         existingEvent.setEventImage(existingEvent.getEventImage());
 
         // Verificamos que hay una imagen nueva para actualizar la anterior

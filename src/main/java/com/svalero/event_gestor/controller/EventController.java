@@ -1,8 +1,8 @@
 package com.svalero.event_gestor.controller;
 
 import com.svalero.event_gestor.Domain.Event;
-import com.svalero.event_gestor.Dto.EventInDto;
-import com.svalero.event_gestor.Dto.EventOutDto;
+import com.svalero.event_gestor.Dto.event.EventInDto;
+import com.svalero.event_gestor.Dto.event.EventOutDto;
 import com.svalero.event_gestor.Service.EventService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

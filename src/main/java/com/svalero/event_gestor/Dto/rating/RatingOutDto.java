@@ -10,12 +10,18 @@ import lombok.NoArgsConstructor;
 public class RatingOutDto {
 
     private long id;
-    private int organizationSpeed;
-    private int eventQuality;
-    private int customerService;
-    private int valueForMoney;
-    private double averageRating; // La media calculada
 
-    private long eventId;  // ID del evento asociado
-    private long userId;   // ID del usuario asociado
+    private int organizationSpeed;
+
+    private int eventQuality;
+
+    private int customerService;
+
+    private int valueForMoney;
+
+    private double averageRating;
+
+    private Long eventId;
+
+    private Long userId;
 }

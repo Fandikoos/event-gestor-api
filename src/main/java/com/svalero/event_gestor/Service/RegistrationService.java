@@ -27,8 +27,6 @@ public class RegistrationService {
     private EventRepository eventRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private ModelMapper modelMapper;
     private DateTimeFormatter formatterDateRegistration = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     // Obtener todas las inscripciones

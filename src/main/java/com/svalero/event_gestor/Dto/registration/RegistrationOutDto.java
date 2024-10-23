@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +15,5 @@ public class RegistrationOutDto {
     private long id;          // ID de la inscripción
     private long eventId;      // ID del evento asociado
     private long userId;       // ID del usuario asociado
-    private LocalDate registrationDate;
+    private LocalDateTime registrationDate;
 }

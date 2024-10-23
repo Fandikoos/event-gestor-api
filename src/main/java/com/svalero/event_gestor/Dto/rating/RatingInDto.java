@@ -33,8 +33,8 @@ public class RatingInDto {
     private int valueForMoney;
 
     @NotNull(message = "Event ID is required")
-    private long eventId;
+    private Long eventId;
 
     @NotNull(message = "User ID is required")
-    private long userId;
+    private Long userId;
 }

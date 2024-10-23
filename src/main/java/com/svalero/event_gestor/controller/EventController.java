@@ -23,7 +23,7 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping
-    public ResponseEntity<List<EventOutDto>> getAll() {
+    public ResponseEntity<List<Event>> getAll() {
         return new ResponseEntity<>(eventService.getAllEvents(), HttpStatus.OK);
     }
 

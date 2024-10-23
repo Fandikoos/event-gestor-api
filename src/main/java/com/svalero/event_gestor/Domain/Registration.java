@@ -30,5 +30,5 @@ public class Registration {
     private User user;
 
     @Column
-    private LocalDate registrationDate;
+    private LocalDateTime registrationDate;
 }

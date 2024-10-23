@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -19,5 +20,5 @@ public class RegistrationInDto {
     private long userId;
 
     @NotNull(message = "Registration date is required")
-    private LocalDate registrationDate;
+    private LocalDateTime registrationDate;
 }

@@ -24,12 +24,8 @@ public class EventService {
     private ModelMapper modelMapper;
 
     // Método para obtener todos los eventos y convertirlos a EventOutDto
-    public List<EventOutDto> getAllEvents() {
-        List<Event> events = eventRepository.findAll();
-        //Convertimos esos eventos en un stream para poder iterar sobre ellos
-        return events.stream()
-                .map(EventMapper::mapToEventOutDto)  // Convertimos cada evento a EventOutDto
-                .collect(Collectors.toList());      //Convertimos el stream (que ya tiene los outdtos) en una lista de objetos nomral
+    public List<Event> getAllEvents() {
+        return eventRepository.findAll();
     }
 
     public Event findEventById(long eventId){

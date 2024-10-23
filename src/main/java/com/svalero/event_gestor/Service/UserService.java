@@ -1,6 +1,7 @@
 package com.svalero.event_gestor.Service;
 
 import com.svalero.event_gestor.Domain.User;
+import com.svalero.event_gestor.Dto.registration.RegistrationOutDto;
 import com.svalero.event_gestor.Dto.user.UserInDto;
 import com.svalero.event_gestor.Dto.user.UserOutDto;
 import com.svalero.event_gestor.Repository.UserRepository;
@@ -20,9 +21,31 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    //Obtener todos los usuarios
-    public List<User> findAll(){
-        return userRepository.findAll();
+    public List<UserOutDto> findAll() {
+        List<User> users = userRepository.findAll();
+
+        // Mapear cada usuario a UserOutDto
+        return users.stream().map(user -> {
+            UserOutDto userDto = new UserOutDto();
+            userDto.setId(user.getId());
+            userDto.setName(user.getName());
+            userDto.setEmail(user.getEmail());
+            userDto.setPhone(user.getPhone());
+
+            // Mapear las inscripciones de cada usuario a RegistrationOutDto
+            List<RegistrationOutDto> registrationDtos = user.getRegistrations().stream()
+                    .map(registration -> new RegistrationOutDto(
+                            registration.getId(),
+                            registration.getEvent().getId(),   // Obtener el eventId
+                            registration.getUser().getId(),    // Obtener el userId
+                            registration.getRegistrationDate() // Fecha de inscripción
+                    ))
+                    .collect(Collectors.toList());
+
+            userDto.setRegistrations(registrationDtos);
+
+            return userDto;
+        }).collect(Collectors.toList());
     }
 
     // Encontrar usuario por id

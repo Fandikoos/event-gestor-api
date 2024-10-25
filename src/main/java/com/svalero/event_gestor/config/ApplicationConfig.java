@@ -1,7 +1,5 @@
 package com.svalero.event_gestor.config;
 
-import com.svalero.event_gestor.Domain.Rating;
-import com.svalero.event_gestor.Dto.rating.RatingInDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

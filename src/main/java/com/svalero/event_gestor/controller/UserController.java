@@ -1,6 +1,5 @@
 package com.svalero.event_gestor.controller;
 
-import com.svalero.event_gestor.Domain.User;
 import com.svalero.event_gestor.Dto.user.UserInDto;
 import com.svalero.event_gestor.Dto.user.UserOutDto;
 import com.svalero.event_gestor.Service.UserService;
@@ -8,13 +7,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/users")
 public class UserController {
 

@@ -1,6 +1,5 @@
 package com.svalero.event_gestor.controller;
 
-import com.svalero.event_gestor.Domain.Rating;
 import com.svalero.event_gestor.Dto.rating.RatingInDto;
 import com.svalero.event_gestor.Dto.rating.RatingOutDto;
 import com.svalero.event_gestor.Service.RatingService;
@@ -8,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +19,7 @@ public class RatingController {
     private RatingService ratingService;
 
     @GetMapping
-    public ResponseEntity<List<Rating>> getAllRatings(){
+    public ResponseEntity<List<RatingOutDto>> getAllRatings(){
         return new ResponseEntity<>(ratingService.getAllRatings(), HttpStatus.OK);
     }
 

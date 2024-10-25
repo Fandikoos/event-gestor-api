@@ -1,8 +1,5 @@
 package com.svalero.event_gestor.Dto.user;
 
-
-import com.svalero.event_gestor.Domain.Rating;
-import com.svalero.event_gestor.Domain.Registration;
 import com.svalero.event_gestor.Dto.rating.RatingOutDto;
 import com.svalero.event_gestor.Dto.registration.RegistrationOutDto;
 import lombok.AllArgsConstructor;

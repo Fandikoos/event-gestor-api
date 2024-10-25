@@ -1,7 +1,7 @@
 package com.svalero.event_gestor.Dto.event;
 
-import com.svalero.event_gestor.Domain.Rating;
-import com.svalero.event_gestor.Domain.Registration;
+import com.svalero.event_gestor.Dto.rating.RatingOutDto;
+import com.svalero.event_gestor.Dto.registration.RegistrationOutDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +23,6 @@ public class EventOutDto {
     private int participants;
     private String price;
     private String eventImage;
-    private List<Registration> registrations;
-    private List<Rating> ratings;
+    private List<RegistrationOutDto> registrations;
+    private List<RatingOutDto> ratings;
 }

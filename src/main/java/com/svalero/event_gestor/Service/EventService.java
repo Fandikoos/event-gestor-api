@@ -5,12 +5,12 @@ import com.svalero.event_gestor.Domain.Event;
 import com.svalero.event_gestor.Dto.event.EventInDto;
 import com.svalero.event_gestor.Dto.event.EventOutDto;
 import com.svalero.event_gestor.Repository.EventRepository;
-import com.svalero.event_gestor.Utils.EventMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,9 +23,25 @@ public class EventService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // Método para obtener todos los eventos y convertirlos a EventOutDto
-    public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+    // Método para obtener todos los eventos
+    public List<EventOutDto> getAllEvents() {
+        //Obtenemos la lista de eventos
+        List<Event> events = eventRepository.findAll();
+
+        // Configuramos como debe mapearse el campo de la imagen al eventOutDto
+        modelMapper.typeMap(Event.class, EventOutDto.class).addMappings(mapper -> {
+            // Si la event image es diferente de null se convierte a un string en base 64 y sino asignamos
+            // null a la imagen (condicional ternario)
+            mapper.map(event -> event.getEventImage() != null
+                    ? Base64.getEncoder().encodeToString(event.getEventImage())
+                    : null, EventOutDto::setEventImage);
+        });
+
+        // Ahora si mapeamos cada Event para transformarlo en un EventOutDto
+        return events.stream()
+                .map(event -> modelMapper.map(event, EventOutDto.class))
+                // Lo convertimos en una lista para retornarla por el metodo
+                .collect(Collectors.toList());
     }
 
     public Event findEventById(long eventId){

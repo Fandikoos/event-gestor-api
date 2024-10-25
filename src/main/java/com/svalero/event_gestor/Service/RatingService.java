@@ -1,8 +1,6 @@
 package com.svalero.event_gestor.Service;
 
-import com.svalero.event_gestor.Domain.Event;
 import com.svalero.event_gestor.Domain.Rating;
-import com.svalero.event_gestor.Domain.User;
 import com.svalero.event_gestor.Dto.rating.RatingInDto;
 import com.svalero.event_gestor.Dto.rating.RatingOutDto;
 import com.svalero.event_gestor.Repository.EventRepository;
@@ -13,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RatingService {
@@ -28,8 +26,15 @@ public class RatingService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<Rating> getAllRatings(){
-        return ratingRepository.findAll();
+    // Obtener todos los ratings
+    public List<RatingOutDto> getAllRatings() {
+        // Obtén todos los ratings
+        List<Rating> ratings = ratingRepository.findAll();
+
+        // Convertimos cada Rating a un RatingOutDto
+        return ratings.stream()
+                .map(rating -> modelMapper.map(rating, RatingOutDto.class))
+                .collect(Collectors.toList());
     }
 
     public RatingOutDto addRating(RatingInDto ratingInDto){

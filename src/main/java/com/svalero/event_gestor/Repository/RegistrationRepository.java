@@ -1,7 +1,6 @@
 package com.svalero.event_gestor.Repository;
 
 import com.svalero.event_gestor.Domain.Registration;
-import com.svalero.event_gestor.Dto.registration.RegistrationOutDto;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

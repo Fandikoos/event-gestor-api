@@ -28,5 +28,4 @@ public class EventInDto {
     private String price;
     private MultipartFile eventImage;
 
-
 }

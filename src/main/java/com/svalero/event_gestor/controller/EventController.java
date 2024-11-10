@@ -33,6 +33,12 @@ public class EventController {
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Event>> findEventsByCategory(@PathVariable String category){
+        List<Event> events = eventService.findEventByCategory(category);
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<EventOutDto> addEvent(@Valid @ModelAttribute EventInDto event) throws IOException {
         EventOutDto newEvent = eventService.addEvent(event);

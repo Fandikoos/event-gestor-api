@@ -42,6 +42,8 @@ public class RegistrationService {
     public RegistrationOutDto addRegistration(RegistrationInDto registrationInDto) {
         Registration registration = modelMapper.map(registrationInDto, Registration.class);
 
+        registration.setRegistrationDate(LocalDateTime.now());
+
         Registration newRegistration = registrationRepository.save(registration);
         return modelMapper.map(newRegistration, RegistrationOutDto.class);
     }

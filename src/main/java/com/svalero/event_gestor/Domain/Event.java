@@ -19,13 +19,16 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @Column
     private String name;
     @Column
     private LocalDate date;
     @Column
-    private String place;
+    private String address;
+    @Column
+    private float lat;
+    @Column
+    private float lng;
     @Column
     private String description;
     @Column

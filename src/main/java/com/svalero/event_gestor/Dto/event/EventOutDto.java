@@ -17,7 +17,9 @@ public class EventOutDto {
     private long id;
     private String name;
     private LocalDate date;
-    private String place;
+    private String address;
+    private float lat;
+    private float lng;
     private String description;
     private String category;  //Carrera, Torneo, Partido, Futbol...
     private int participants;

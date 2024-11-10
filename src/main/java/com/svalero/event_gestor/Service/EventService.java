@@ -39,7 +39,9 @@ public class EventService {
             dto.setId(event.getId());
             dto.setName(event.getName());
             dto.setDate(event.getDate());
-            dto.setPlace(event.getPlace());
+            dto.setAddress(event.getAddress());
+            dto.setLat(event.getLat());
+            dto.setLng(event.getLng());
             dto.setDescription(event.getDescription());
             dto.setCategory(event.getCategory());
             dto.setParticipants(event.getParticipants());
@@ -95,6 +97,10 @@ public class EventService {
         return eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Evento con el id: " + eventId + " no encontrado."));
     }
 
+    public List<Event> findEventByCategory(String category){
+        return  eventRepository.findByCategory(category);
+    }
+
     public EventOutDto addEvent(EventInDto eventInDto) throws IOException {
         Event event = new Event();
 
@@ -134,7 +140,9 @@ public class EventService {
         // Actualizamos los campos del evento existentes cn los valores proporcionados en el body del postman
         existingEvent.setName(eventInDto.getName());
         existingEvent.setDate(eventInDto.getDate());
-        existingEvent.setPlace(eventInDto.getPlace());
+        existingEvent.setAddress(eventInDto.getAddress());
+        existingEvent.setLat(eventInDto.getLat());
+        existingEvent.setLng(eventInDto.getLng());
         existingEvent.setDescription(eventInDto.getDescription());
         existingEvent.setParticipants(eventInDto.getParticipants());
         existingEvent.setPrice(eventInDto.getPrice());

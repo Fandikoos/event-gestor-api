@@ -19,8 +19,12 @@ public class EventInDto {
     private String name;
     @NotNull(message = "It is mandatory to establish the date of the event")
     private LocalDate date;
-    @NotNull(message = "It is mandatory to establish the place of the event")
-    private String place;
+    @NotNull(message = "It is mandatory to establish the address of the event")
+    private String address;
+    @NotNull(message = "It is mandatory to establish the latitud of event")
+    private float lat;
+    @NotNull(message = "It is mandatory to establish the lingitud of the event")
+    private float lng;
     private String description;
     private String category;
     @Min(value = 2, message = "Minimium participants must be 2")

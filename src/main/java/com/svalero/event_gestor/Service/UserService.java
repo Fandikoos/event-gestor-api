@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +35,10 @@ public class UserService {
     // Encontrar usuario por id
     public User findUserById(long userId) {
         return userRepository.findById(userId).orElseThrow();
+    }
+
+    public Optional<User> findByNameAndPassword(String name, String password) {
+        return Optional.ofNullable(userRepository.findByNameAndPassword(name, password));
     }
 
     // Agregar un nuevo usuario

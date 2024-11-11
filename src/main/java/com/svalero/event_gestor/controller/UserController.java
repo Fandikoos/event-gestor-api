@@ -1,5 +1,6 @@
 package com.svalero.event_gestor.controller;
 
+import com.svalero.event_gestor.Domain.User;
 import com.svalero.event_gestor.Dto.user.UserInDto;
 import com.svalero.event_gestor.Dto.user.UserOutDto;
 import com.svalero.event_gestor.Service.UserService;
@@ -22,6 +23,13 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserOutDto>> getAllUsers(){
         return new ResponseEntity<>(userService.findAll(),HttpStatus.OK);
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<User> getUserByNameAndPassword(@RequestParam String name, @RequestParam String password) {
+        return userService.findByNameAndPassword(name, password)
+                .map(user -> new ResponseEntity<>(user, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping

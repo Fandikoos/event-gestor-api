@@ -33,6 +33,13 @@ public class EventController {
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
+    // Endpoint para obtener múltiples eventos por una lista de IDs
+    @PostMapping("/multiple")
+    public ResponseEntity<List<Event>> findEventsByIds(@RequestBody List<Long> eventIds) {
+        List<Event> events = eventService.findEventsByIds(eventIds);
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
     @GetMapping("/category/{category}")
     public ResponseEntity<List<Event>> findEventsByCategory(@PathVariable String category){
         List<Event> events = eventService.findEventByCategory(category);

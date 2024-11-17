@@ -32,6 +32,12 @@ public class UserController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/searchUser")
+    public ResponseEntity<User> getUserById(@RequestParam long id){
+        User user = userService.findUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<UserOutDto> addUser(@Valid @RequestBody UserInDto user) throws IOException{
         UserOutDto newUser = userService.addUser(user);

@@ -97,6 +97,13 @@ public class EventService {
         return eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Evento con el id: " + eventId + " no encontrado."));
     }
 
+    // Método para obtener múltiples eventos por sus IDs
+    public List<Event> findEventsByIds(List<Long> eventIds) {
+        return eventIds.stream()
+                .map(this::findEventById)
+                .collect(Collectors.toList());
+    }
+
     public List<Event> findEventByCategory(String category){
         return  eventRepository.findByCategory(category);
     }

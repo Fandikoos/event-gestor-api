@@ -38,6 +38,14 @@ public class RegistrationService {
                 .collect(Collectors.toList());
     }
 
+    public List<RegistrationOutDto> findEventsByUserId(long userId){
+        List<Registration> registrations = registrationRepository.findRegistrationsByUserId(userId);
+
+        return registrations.stream()
+                .map(registration -> modelMapper.map(registration, RegistrationOutDto.class))
+                .collect(Collectors.toList());
+    }
+
     // Agregar una nueva inscripción
     public RegistrationOutDto addRegistration(RegistrationInDto registrationInDto) {
         Registration registration = modelMapper.map(registrationInDto, Registration.class);

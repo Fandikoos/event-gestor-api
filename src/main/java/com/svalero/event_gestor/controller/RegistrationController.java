@@ -1,5 +1,6 @@
 package com.svalero.event_gestor.controller;
 
+import com.svalero.event_gestor.Domain.Registration;
 import com.svalero.event_gestor.Dto.registration.RegistrationInDto;
 import com.svalero.event_gestor.Dto.registration.RegistrationOutDto;
 import com.svalero.event_gestor.Service.RegistrationService;
@@ -20,6 +21,11 @@ public class RegistrationController {
     @GetMapping
     public ResponseEntity<List<RegistrationOutDto>> getAllRegistrations() {
         return new ResponseEntity<>(registrationService.getAllRegistrations(), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<RegistrationOutDto>> findEventById(@PathVariable long userId){
+        return new ResponseEntity<>(registrationService.findEventsByUserId((userId)), HttpStatus.OK);
     }
 
     // Agregar una nueva inscripción

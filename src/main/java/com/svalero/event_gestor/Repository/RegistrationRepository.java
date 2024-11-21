@@ -1,6 +1,8 @@
 package com.svalero.event_gestor.Repository;
 
+import com.svalero.event_gestor.Domain.Event;
 import com.svalero.event_gestor.Domain.Registration;
+import com.svalero.event_gestor.Domain.User;
 import com.svalero.event_gestor.Dto.registration.RegistrationOutDto;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +15,6 @@ public interface RegistrationRepository extends CrudRepository<Registration, Lon
     List<Registration> findAll();
 
     List<Registration> findRegistrationsByUserId(long userId);
+
+    boolean existsByEventAndUser(Event event, User user);
 }

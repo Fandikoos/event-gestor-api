@@ -28,6 +28,12 @@ public class RegistrationController {
         return new ResponseEntity<>(registrationService.findEventsByUserId((userId)), HttpStatus.OK);
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> isUserRegistered(@RequestParam long eventId,@RequestParam long userId) {
+        boolean isRegistered = registrationService.isUserRegisteredForEvent(eventId, userId);
+        return ResponseEntity.ok(isRegistered);
+    }
+
     // Agregar una nueva inscripción
     @PostMapping
     public ResponseEntity<RegistrationOutDto> addRegistration(@RequestBody RegistrationInDto registrationInDto) {

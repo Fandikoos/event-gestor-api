@@ -46,8 +46,17 @@ public class RegistrationService {
                 .collect(Collectors.toList());
     }
 
+    public boolean isUserRegisteredForEvent(long eventId, long userId) {
+        Event event = eventRepository.findById(eventId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow();
+
+        return registrationRepository.existsByEventAndUser(event, user);
+    }
+
     // Agregar una nueva inscripción
     public RegistrationOutDto addRegistration(RegistrationInDto registrationInDto) {
+        Event event = eventRepository.findById(registrationInDto.getEventId()).orElseThrow();
+        event.setParticipants(event.getParticipants() - 1);
         Registration registration = modelMapper.map(registrationInDto, Registration.class);
 
         registration.setRegistrationDate(LocalDateTime.now());
@@ -58,8 +67,19 @@ public class RegistrationService {
 
     // Eliminar una inscripción
     public void removeRegistration(long registrationId) {
+        // Buscar la inscripción
         Registration registration = registrationRepository.findById(registrationId)
                 .orElseThrow(() -> new RuntimeException("Registration not found"));
+
+        // Buscar el evento asociado a la inscripción
+        Event event = eventRepository.findById(registration.getEvent().getId())
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+
+        event.setParticipants(event.getParticipants() + 1);
+
+        // Guardar el evento actualizado
+        eventRepository.save(event);
+
         registrationRepository.delete(registration);
     }
 }

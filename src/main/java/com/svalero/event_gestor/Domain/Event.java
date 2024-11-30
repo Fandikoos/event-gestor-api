@@ -40,12 +40,12 @@ public class Event {
     @Lob
     private byte[] eventImage;
     // Relación One-to-Many con Registro
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Registration> registrations;
 
     // Relación One-to-Many con Rating
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Rating> ratings;
 }

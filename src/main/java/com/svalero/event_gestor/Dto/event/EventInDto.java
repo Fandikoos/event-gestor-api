@@ -27,7 +27,6 @@ public class EventInDto {
     private float lng;
     private String description;
     private String category;
-    @Min(value = 2, message = "Minimium participants must be 2")
     private int participants;
     private String price;
     private MultipartFile eventImage;

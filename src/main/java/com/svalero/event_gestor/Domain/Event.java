@@ -1,6 +1,7 @@
 package com.svalero.event_gestor.Domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,13 +40,18 @@ public class Event {
     private String price;
     @Lob
     private byte[] eventImage;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id", nullable = false)
+    @JsonBackReference
+    private Admin admin;
     // Relación One-to-Many con Registro
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "event")
     @JsonManagedReference
     private List<Registration> registrations;
 
     // Relación One-to-Many con Rating
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "event")
     @JsonManagedReference
     private List<Rating> ratings;
 }

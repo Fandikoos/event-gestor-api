@@ -1,9 +1,12 @@
 package com.svalero.event_gestor.Domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,5 +29,9 @@ public class Admin {
 
     @Column
     private String phone;
+
+    @OneToMany(mappedBy = "admin")
+    @JsonManagedReference
+    private List<Event> events;
 
 }

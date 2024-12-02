@@ -1,11 +1,13 @@
 package com.svalero.event_gestor.Service;
 
 
+import com.svalero.event_gestor.Domain.Admin;
 import com.svalero.event_gestor.Domain.Event;
 import com.svalero.event_gestor.Dto.event.EventInDto;
 import com.svalero.event_gestor.Dto.event.EventOutDto;
 import com.svalero.event_gestor.Dto.rating.RatingOutDto;
 import com.svalero.event_gestor.Dto.registration.RegistrationOutDto;
+import com.svalero.event_gestor.Repository.AdminRepository;
 import com.svalero.event_gestor.Repository.EventRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class EventService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -108,31 +113,48 @@ public class EventService {
         return  eventRepository.findByCategory(category);
     }
 
-    public EventOutDto addEvent(EventInDto eventInDto) throws IOException {
+    public EventOutDto addEvent(EventInDto eventInDto, Long adminId) throws IOException {
         Event event = new Event();
 
-        // Mapeamos los campos de EventInDto al objeto Event, se los pasamos digamos, model mapper
-        // se encarga de copiar estos valores
-        // Tenemos el id automatico dentro del event por lo que lo coge de ahí que es incrementable, lo mismo pasaría con fechas...
+        // Mapeamos los campos de EventInDto al objeto Event
         modelMapper.map(eventInDto, event);
 
-        //Verificamos que existe la imagen
-        if(eventInDto.getEventImage() != null){
-            //La convertimos a un array de bytes
-            event.setEventImage(eventInDto.getEventImage().getBytes());
+        // Verificamos que el administrador existe antes de asociarlo
+        Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new RuntimeException("Admin no encontrado"));
+
+        // Asignamos el admin al evento
+        event.setAdmin(admin);
+
+        // Verificamos si hay una imagen en el EventInDto
+        if (eventInDto.getEventImage() != null && !eventInDto.getEventImage().isEmpty()) {
+            event.setEventImage(eventInDto.getEventImage().getBytes()); // Convertir a array de bytes
         }
 
-        // Creamos un newEvent que contiene los datos del InDto y lo guardamos en el repository
-        // Guaradmos este objeto en la bbdd con el .save y el resultado se almacena en newEvent
+        // Actualizamos la lista de eventos del administrador
+        if (admin.getEvents() == null) {
+            admin.setEvents(new ArrayList<>());  // Si no existe la lista, la inicializamos
+        }
+        admin.getEvents().add(event);  // Agregamos el nuevo evento a la lista de eventos del admin
+
+        // Guardamos el evento en la base de datos
         Event newEvent = eventRepository.save(event);
 
-        // Creamos un OutDto para devolver una respuesta, en el Postman por ejemplo
+        // También guardamos el admin para actualizar la relación bidireccional
+        adminRepository.save(admin);
+
+        // Convertimos el evento creado a un DTO de salida (EventOutDto)
         EventOutDto eventOutDto = new EventOutDto();
-        // Mapemaos los atributos del newEvent en nuestro EventOutDto para la respuesta
         modelMapper.map(newEvent, eventOutDto);
 
-        //Lo devolvemos para mostrarlo en Postman
+        // Devolvemos el EventOutDto para que el cliente lo vea
         return eventOutDto;
+    }
+
+
+
+    // Método para buscar eventos por adminId
+    public List<Event> findByAdminId(Long adminId) {
+        return eventRepository.findByAdminId(adminId);
     }
 
     public void removeEvent(long eventId){

@@ -13,4 +13,7 @@ public interface EventRepository extends CrudRepository<Event, Long> {
 
     List<Event> findByCategory(String category);
 
+    List<Event> findByAdminId(long adminId);
+
+
 }

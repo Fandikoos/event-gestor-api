@@ -30,5 +30,6 @@ public class EventInDto {
     private int participants;
     private String price;
     private MultipartFile eventImage;
+    private Long adminId;
 
 }

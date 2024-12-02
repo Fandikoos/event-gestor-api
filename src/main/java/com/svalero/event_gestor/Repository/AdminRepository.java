@@ -1,6 +1,7 @@
 package com.svalero.event_gestor.Repository;
 
 import com.svalero.event_gestor.Domain.Admin;
+import com.svalero.event_gestor.Domain.Event;
 import com.svalero.event_gestor.Domain.User;
 import org.springframework.data.repository.CrudRepository;
 

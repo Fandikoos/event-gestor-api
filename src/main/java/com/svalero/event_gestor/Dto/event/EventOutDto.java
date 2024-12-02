@@ -27,4 +27,5 @@ public class EventOutDto {
     private String eventImage;
     private List<RegistrationOutDto> registrations;
     private List<RatingOutDto> ratings;
+    private Long adminId;
 }

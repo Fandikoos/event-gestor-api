@@ -46,11 +46,12 @@ public class EventController {
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
+    /*
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<EventOutDto> addEvent(@Valid @ModelAttribute EventInDto event) throws IOException {
         EventOutDto newEvent = eventService.addEvent(event);
         return new ResponseEntity<>(newEvent, HttpStatus.CREATED);
-    }
+    }*/
 
     @DeleteMapping("/{eventId}")
     public ResponseEntity<Void> removeEvent(@PathVariable long eventId){
